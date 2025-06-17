@@ -1,17 +1,43 @@
 name: Super-Linter
 
-on: push
+on:
+  push:
+  pull_request:
 
 jobs:
   super-lint:
     name: Lint code base
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Run Super-Linter
-        uses: github/super-linter@v4
+        uses: super-linter/super-linter@v5
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Linter behavior options
+          VALIDATE_ALL_CODEBASE: true        # Lint everything, not just changed files
+          VALIDATE_MARKDOWN: true            # Enable Markdown checks
+          VALIDATE_YAML: true                # YAML linter
+          VALIDATE_JSON: true                # JSON linter
+          VALIDATE_BASH: true                # Bash/Shell scripts
+          VALIDATE_JAVASCRIPT_ES: true       # JavaScript (ESLint)
+          VALIDATE_TYPESCRIPT_ES: true       # TypeScript (with ESLint)
+          VALIDATE_CPP: true                 # C/C++ support
+          VALIDATE_PYTHON: true              # Python (pylint)
+          VALIDATE_HTML: true                # HTML validation
+          VALIDATE_CSS: true                 # CSS validation
+          VALIDATE_DOCKERFILE: true          # Dockerfile linting
+          VALIDATE_GITHUB_ACTIONS: true      # Checks your GitHub Actions workflows
+          VALIDATE_TERRAFORM: true           # If you're using Terraform
+          VALIDATE_XML: true                 # XML linting
+
+          # Optional: Fail on errors (default is true)
+          FAIL_ON_ERROR: true
+
+          # Optional: Use your own linter config files (e.g. `.eslintrc`, `.pylintrc`, etc.)
+          USE_FIND_ALGORITHM: true
